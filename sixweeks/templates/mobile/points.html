@@ -1,0 +1,133 @@
+{% extends "mobile/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block left_arrow_block %}
+{% with cur_date=cur_day|date:"Y-m-d" %}
+<a href="{% url 'day' cur_day=cur_date %}" data-icon="arrow-l" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-left ui-btn-icon-left ui-icon-arrow-l">
+  &nbsp
+</a>
+{% endwith %}
+{% endblock left_arrow_block %}
+
+{% block right_arrow_block %}
+{% endblock right_arrow_block %}
+
+{% block page_content %}
+          <div id="content_div">
+	    {% with cur_date=cur_day|date:"Y-m-d" %}
+            <form method="post" action="{% url 'day_points' cur_date %}" data-ajax="false">
+  	      {% csrf_token %}
+
+	      <fieldset data-role="controlgroup" class="ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+		<div class="ui-controlgroup-controls">
+		  {% for point in points %}
+		  <div class="ui-checkbox">
+		    {% with num=point.pk|stringformat:"s" %}
+		    {% with name="checkbox_"|add:num %}
+		    {% if point.pk in checked_points %}
+		    <input type="checkbox" name="points" id="{{ name }}" value="{{ point.pk }}" class="custom" checked>
+		    {% else %}
+		    <input type="checkbox" name="points" id="{{ name }}" value="{{ point.pk }}" class="custom">
+		    {% endif %}
+		    <label for="{{ name }}" data-corners="true" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-icon="checkbox-off" data-theme="c" data-mini="false" class="ui-btn ui-fullsize ui-btn-icon-left ui-checkbox-off ui-corner-top ui-btn-up-c">
+		      <span class="ui-btn-inner ui-corner-top">
+			<span class="ui-btn-text">
+			  {{ point.title }}
+			</span>
+			<span class="ui-icon ui-icon-checkbox-off ui-icon-shadow">
+			  &nbsp;
+			</span>
+		      </span>
+		    </label>
+		    {% endwith %}
+		    {% endwith %}
+		  </div>
+		  {% endfor %}
+		</div>
+	      </fieldset>
+	      <input id="submit_button" type="submit" value="Submit"/>
+	    </form>
+	    {% endwith %}
+	  </div>
+	<!--/fieldset-->
+
+	{% comment %}
+	<script>
+	  $(function(){
+	    $('#submit_button').bind( "tap", submitHandler);
+
+	  function submitHandler(event){
+	      event.preventDefault();
+
+	      var data_array = [];
+	      $("input[type='checkbox']:checked").each(function(){
+	        data_array.push($(this).val());
+	      });
+
+	      var data = data_array;
+	      var datastr='name='+data;
+
+	      $.ajax({
+	        type: "POST",
+	        url: $(this),
+	        data: datastr,
+	        success: function(data){
+	          $("#content_div").replaceWith(data);
+	          //$.mobile.loading('hide');
+	          //$("#ui-loading").loader.hide();
+	          //$.moble.hidePageLoadingMsg();
+	        }
+	      });
+	    }
+	  });
+	</script>
+	{% endcomment %}
+
+	{% comment %}
+	{% with cur_date=cur_day|date:"Y-m-d" %}
+	<script>
+	  function refreshPage() {
+	    jQuery.mobile.pageContainer.pagecontainer('change', window.location.href, {
+	      allowSamePageTransition: true,
+	      transition: 'none',
+	      reloadPage: true
+	    });
+	  }
+	  
+	  $('#submit_button').click(function(e){
+	    e.preventDefault();
+	    var data_array = [];
+	    var checked_boxes = $("input[type='checkbox']:checked");
+	    checked_boxes.each(function(){
+	      data_array.push($(this).val());
+	    });
+
+	    var data = data_array;
+  	    var datastr='name='+data;
+	    $.ajax({
+	      type: "POST",
+	      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+	      url: "{% url 'day_points' cur_date %}",
+	      data: datastr,
+	      complete: function() { /*$.mobile.loading('hide');*/ },
+	      success: function(data){
+	        refreshPage();
+	        //$("#content_div").replaceWith(data);
+	        //$.mobile.loading('hide');
+	        //$("#ui-loading").loader.hide();
+	        //$.moble.hidePageLoadingMsg();
+	      }
+	    });
+	  });
+	</script>
+	{% endwith %}
+	{% endcomment %}
+	
+{% endblock page_content %}
+
+{% block page_footer %}
+      <div id="footer" data-role="footer" data-id="footer" class="ui-footer ui-bar-b ui-footer-fixed slideup" data-position="fixed">
+	<h2 class="ui-title">Total:</h2>
+      </div>
+{% endblock page_footer %}

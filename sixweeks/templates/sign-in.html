@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Six Weeks - Sign In</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  </head>
+
+  <body>
+    <div data-role="page">
+      <div data-role="header" data-theme="c" class="ui-header ui-bar-b">
+	<h1 class="ui-title">Six Weeks</h1>
+      </div>
+      <div role="main" class="ui-content">
+	<h3>Sign In</h3>
+	<form method="post" action="{% url 'sign-in' %}" data-ajax="false">
+	  {% csrf_token %}
+	  {{ form.email.label_tag }}
+	  {{ form.email.errors }}
+	  {{ form.email }}
+
+	  {{ form.password.label_tag }}
+	  {{ form.password.errors }}
+	  {{ form.password }}
+
+	  <fieldset data-role="controlgroup">
+	    <input type="checkbox" name="check-remember-me" id="check-remember-me" checked="">
+	    <label for="check-remember-me">Remember me</label>
+	  </fieldset>
+	  <input type="submit" value="Submit" />
+	</form>
+	<p class="mc-top-margin-1-5"><a href="begin-password-reset.html">Can't access your account?</a></p>
+
+	<div data-role="popup" id="dlg-invalid-credentials" data-dismissable="false" style="max-width:400px;">
+	  <div role="main" class="ui-content">
+	    <h3 class="mc-text-danger">Login Failed</h3>
+	    <p>Did you enter the right email address and password?</p>
+	    <div class="mc-text-center"><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a></div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </body>
+
+</html>

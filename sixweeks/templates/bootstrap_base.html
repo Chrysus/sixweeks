@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- END BOOTSTRAP -->
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/simple-sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/navbar.css' %}">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+	<div class="navbar-header">
+	  <a class="navbar-brand" href="#">Six Weeks</a>
+	</div>
+	<ul class="nav navbar-nav navbar-center">
+	  <li class="nav-item">
+	    {% with prev_date=prev_day|date:"Y-m-d" %}
+	    <a class="nav-link" href="{% url 'day' cur_day=prev_date %}"><span class="glyphicon glyphicon-chevron-left"></span></a>
+	    {% endwith %}
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#">{{ cur_day|date:"m/d/Y" }}</a>
+	  </li>
+	  <li class="nav-item">
+	    {% with next_date=next_day|date:"Y-m-d" %}
+	    <a class="nav-link" href="{% url 'day' cur_day=next_date %}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+	    {% endwith %}
+	  </li>
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+	  <li class="nav-item">
+	    <a class="nav-link" href="{% url 'sign-out' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+	  </li>
+	</ul>
+      </div>
+    </nav>
+
+    <div id="wrapper" class="toggled">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+	<ul class="sidebar-nav">
+	  {% if user and user.first_name and user.last_name %}
+	  <li class="sidebar-brand">
+	    <a href="{% url 'main' %}">{{ user.first_name }} {{ user.last_name }}</a>
+	  </li>
+	  {% endif %}
+	  {% with cur_date=cur_day|date:"Y-m-d" %}
+	  <li>
+	    <a href="{% url 'day_points' cur_date %}">Points</a>
+	  </li>
+	  <li>
+	    <a href="{% url 'day_nutrition' cur_date %}">Nutrition</a>
+	  </li>
+	  <li>
+	    <a href="{% url 'day_fitness' cur_date %}">Fitness</a>
+	  </li>
+	  <li>
+	    <a href="{% url 'day_messages' cur_date %}">Messages</a>
+	  </li>
+	  {% endwith %}
+	</ul>
+      </div>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+	<div class="container-fluid">
+	  {% block page_content %}
+	  {% endblock page_content %}
+	  <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+	</div>
+      </div>
+    </div>
+    
+    <!-- Menu Toggle Script -->
+    <script>
+      $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+      });
+    </script>
+    
+  </body>
+</html>

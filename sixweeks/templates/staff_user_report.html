@@ -1,0 +1,55 @@
+{% extends "staff_bootstrap_base.html" %}
+{% block page_content %}
+{{ block.super }}
+
+<div name='user_report_nav'>
+  {% if selected_user.first_name and selected_user.last_name %}
+  <h1>{{ selected_user.first_name }} {{ selected_user.last_name }}</h1>
+  <h5>{{ selected_user.email }}</h5>
+  {% else %}
+  <h1>{{ selected_user.email }}</h1>
+  {% endif %}
+
+  {% with prev_date=prev_day|date:"Y-m-d" %}
+  <a href="{% url 'staff_user_report' selected_user.pk prev_date %}"><span class="glyphicon glyphicon-chevron-left"></span></a>
+  {% endwith %}
+
+  <a class="nav-link" href="#">{{ cur_day|date:"m/d/Y" }}</a>
+
+  {% with next_date=next_day|date:"Y-m-d" %}
+  <a href="{% url 'staff_user_report' selected_user.pk next_date %}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+  {% endwith %}
+</div>
+
+{% if day is None %}
+<h2>No User Data for Today</h2>
+{% else %}
+<h1>Points</h1>
+{% if day.points.all %}
+{% for point in day.points.all %}
+<p>{{ point.title }}</p>
+{% empty %}
+<h4>No points reported</h4>
+{% endfor %}
+{% else %}
+<h4>No points reported</h4>
+{% endif %}
+
+<h1>Nutrition</h1>
+<h3>Breakfast</h3>
+<pre>{{ day.breakfast.description|default:"None reported" }}</pre>
+<h3>Lunch</h3>
+<pre>{{ day.lunch.description|default:"None reported" }}</pre>
+<h3>Dinner</h3>
+<pre>{{ day.dinner.description|default:"None reported" }}</pre>
+<h3>Snacks</h3>
+<pre>{{ day.snacks.description|default:"None reported" }}</pre>
+<h1>Fitness</h1>
+<h3>Cardio</h3>
+<pre>{{ day.cardio.description|default:"None reported" }}</pre>
+<h3>Strength</h3>
+<pre>{{ day.strength.description|default:"None reported" }}</pre>
+<h3>Other</h3>
+<h1>Messages</h1>
+{% endif %}
+{% endblock page_content %}

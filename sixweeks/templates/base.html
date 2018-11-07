@@ -1,0 +1,23 @@
+<!DOCUMENT html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock title %}</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+    {% block framework_scripts %}
+    {% endblock framework_scripts %}
+
+    {% block stylesheets %}
+    {% endblock stylesheets %}
+
+  </head>
+  <body>
+
+    {% block content %}
+    {% endblock content %}
+    
+    {% block framework_body_end_scripts %}
+    {% endblock framework_body_end_scripts %}
+  </body>
+</html>

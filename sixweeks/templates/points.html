@@ -1,0 +1,28 @@
+{% extends "bootstrap_base.html" %}
+
+{% block page_content %}
+        <h1>Points</h1>
+
+	{% with cur_date=cur_day|date:"Y-m-d" %}
+	<form method="post" action="{% url 'day_points' cur_date %}">
+	  {% csrf_token %}
+	  {% for point in points %}
+	  <div class="checkbox">
+	    {% with num=point.pk|stringformat:"s" %}
+	    {% with name="checkbox_"|add:num %}
+	    {% if point.pk in checked_points %}
+	    <input type="checkbox" name="points" id="{{ name }}" value="{{ point.pk }}" class="custom" checked>
+	    {% else %}
+	    <input type="checkbox" name="points" id="{{ name }}" value="{{ point.pk }}" class="custom">
+	    {% endif %}
+	    <label for="{{ name }}">
+	      {{ point.title }}
+	    </label>
+	    {% endwith %}
+	    {% endwith %}
+	  </div>
+	  {% endfor %}
+	  <input type="submit" value="Submit"/>
+	</form>
+	{% endwith %}
+{% endblock page_content %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <!--link rel='stylesheet' href='index.css'-->
+  </head>
+  <body>
+    <div data-role="page" data-url="/sixweeks">
+
+      <div id='header' data-role="header" class="ui-header ui-bar-b" data-position="fixed">
+	{% block left_arrow_block %}
+	{% with prev_date=prev_day|date:"Y-m-d" %}
+	<a href="{% url 'day' cur_day=prev_date %}" data-icon="arrow-l" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-left ui-btn-icon-left ui-icon-arrow-l">
+	  &nbsp
+	</a>
+	{% endwith %}
+	{% endblock left_arrow_block %}
+
+	<h2 class="ui-title">{{ cur_day|date:"m/d/Y" }}</h2>
+
+	{% block right_arrow_block %}
+	{% with next_date=next_day|date:"Y-m-d" %}
+	<a href="{% url 'day' cur_day=next_date %}" data-icon="arrow-r" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-right ui-btn-icon-right ui-icon-arrow-r">
+	  &nbsp
+	</a>
+	{% endwith %}
+	{% endblock right_arrow_block %}
+      </div>
+      <br>
+
+      <div id='content' data-role="content">
+	{% block page_content %}
+	{% endblock page_content %}
+      </div>
+
+      {% block page_footer %}
+      {% if include_footer %}
+      <div id="footer" data-role="footer" data-id="footer" class="ui-footer ui-bar-b ui-footer-fixed slideup" data-position="fixed">
+	<ul class="ui-grid-c">
+	  <li class="ui-block-a">Points</li>
+	  <li class="ui-block-b">Exercise</li>
+	  <li class="ui-block-c">Nutrition</li>
+	</ul>
+      </div>
+      {% endif %}
+      {% endblock page_footer %}
+
+    </div>
+  </body>
+</html>

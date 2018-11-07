@@ -1,0 +1,24 @@
+{% extends "bootstrap_base.html" %}
+
+{% block page_content %}
+        <h1>Fitness</h1>
+
+	{% with cur_date=cur_day|date:"Y-m-d" %}
+	<form method="post" action="{% url 'day_fitness' cur_date %}">
+	  {% csrf_token %}
+	  <div class="form-group">
+	    <div id="cardio">
+	      {{ form.cardio.label_tag }}
+	      {{ form.cardio.errors }}
+	      {{ form.cardio }}
+	    </div>
+	    <div id="strength">
+	      {{ form.strength.label_tag }}
+	      {{ form.strength.errors }}
+	      {{ form.strength }}
+	    </div>
+	  </div>
+	  <input type="submit" value="Submit"/>
+	</form>
+	{% endwith %}
+{% endblock page_content %}

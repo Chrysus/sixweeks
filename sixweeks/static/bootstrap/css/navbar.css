@@ -1,0 +1,22 @@
+/*!
+ * Copyright 2017 Chrysus
+ * Licensed under MIT (https://github.com/Chrysus/sixweeks/blob/master/LICENSE)
+ */
+
+body {
+    padding-top: 50px;
+}
+
+@media (max-width: 979px) {
+    body {
+	padding-top: 0px;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav.navbar-center {
+	position: absolute;
+	left: 50%;
+	transform: translatex(-50%);
+    }
+}

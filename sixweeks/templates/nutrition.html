@@ -1,0 +1,34 @@
+{% extends "bootstrap_base.html" %}
+
+{% block page_content %}
+          <h1>Nutrition</h1>
+
+	  {% with cur_date=cur_day|date:"Y-m-d" %}
+	  <form method="post" action="{% url 'day_nutrition' cur_date %}">
+	    {% csrf_token %}
+	    <div class="form-group">
+              <div id="breakfast">
+		{{ form.breakfast.label_tag }}
+		{{ form.breakfast.errors }}
+		{{ form.breakfast }}
+	      </div>
+	      <div id="lunch">
+		{{ form.lunch.label_tag }}
+		{{ form.lunch.errors }}
+		{{ form.lunch }}
+	      </div>
+	      <div id="dinner">
+		{{ form.dinner.label_tag }}
+		{{ form.dinner.errors }}
+		{{ form.dinner }}
+	      </div>
+	      <div id="snacks">
+		{{ form.snacks.label_tag }}
+		{{ form.snacks.errors }}
+		{{ form.snacks }}
+	      </div>
+	    </div>
+	    <input type="submit" value="Submit"/>
+	  </form>
+	  {% endwith %}
+{% endblock page_content %}

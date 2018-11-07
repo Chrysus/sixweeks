@@ -1,0 +1,44 @@
+{% extends "mobile/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block left_arrow_block %}
+{% with cur_date=cur_day|date:"Y-m-d" %}
+<a href="{% url 'day' cur_day=cur_date %}" data-icon="arrow-l" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-left ui-btn-icon-left ui-icon-arrow-l">
+  &nbsp
+</a>
+{% endwith %}
+{% endblock left_arrow_block %}
+
+{% block right_arrow_block %}
+{% endblock right_arrow_block %}
+
+{% block page_content %}
+	{% with cur_date=cur_day|date:"Y-m-d" %}
+	<form method="post" action="{% url 'day_nutrition' cur_date %}">
+	  {% csrf_token %}
+
+	  <div id="breakfast">
+	    {{ form.breakfast.label_tag }}
+	    {{ form.breakfast.errors }}
+	    {% render_field form.breakfast class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow"%}
+	  </div>
+	  <div id="lunch">
+	    {{ form.lunch.label_tag }}
+	    {{ form.lunch.errors }}
+	    {% render_field form.lunch class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" %}
+	  </div>
+	  <div id="dinner">
+	    {{ form.dinner.label_tag }}
+	    {{ form.dinner.errors }}
+	    {% render_field form.dinner class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" %}
+	  </div>
+	  <div id="snacks">
+	    {{ form.snacks.label_tag }}
+	    {{ form.snacks.errors }}
+	    {% render_field form.snacks class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" %}
+	  </div>
+	  <input type="submit" value="Submit"/>
+	</form>
+	{% endwith %}
+{% endblock page_content %}

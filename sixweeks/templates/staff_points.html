@@ -1,0 +1,76 @@
+{% extends "staff_bootstrap_base.html" %}
+{% block page_content %}
+{{ block.super }}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Points</th>
+      <th>Description</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for point in points %}
+    <tr>
+      <td>{{ point.title }}</td>
+      <td>{{ point.point_value }}</td>
+      <td>{{ point.description }}</td>
+      <td>
+	<button class="editPointModal" data-toggle="modal" data-target="#editPointModal" data-id="{{ point.pk}}">
+	  Edit
+	</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#addPointsModal">Add</button>
+
+{% include "staff_points_add_dialog.html" with dialog_id="addPointsModal" %}
+
+{% include "staff_points_add_dialog.html" with dialog_id="editPointModal" %}
+
+<!--
+<script>
+$(document).on("click", ".editPointModal", function () {
+var point_id = $(this).data('id');
+$(".modal-body #point_id").val( point_id );
+});
+</script>
+-->
+
+<!--
+<div id="addPointsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<h4 class="modal-title">Create New Point</h4>
+      </div>
+      <div class="modal-body">
+	<form method="post" action="{% url 'points_admin' %}">
+	  {% csrf_token %}
+	  {{ form.title.label_tag }}
+	  {{ form.title.errors }}
+	  {{ form.title }}
+	  {{ form.description.label_tag }}
+	  {{ form.description.errors }}
+	  {{ form.description }}
+	  {{ form.point_value.label_tag }}
+	  {{ form.point_value.errors }}
+	  {{ form.point_value }}
+	  <input type="submit" value="Create"/>
+	</form>
+      </div>
+      <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+{% endblock page_content %}
+

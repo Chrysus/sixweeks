@@ -1,0 +1,35 @@
+{% extends "mobile/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block left_arrow_block %}
+{% with cur_date=cur_day|date:"Y-m-d" %}
+<a href="{% url 'day' cur_day=cur_date %}" data-icon="arrow-l" class="ui-btn ui-corner-all ui-btn-inline ui-mini ui-btn-left ui-btn-icon-left ui-icon-arrow-l">
+  &nbsp
+</a>
+{% endwith %}
+{% endblock left_arrow_block %}
+
+{% block right_arrow_block %}
+{% endblock right_arrow_block %}
+
+{% block page_content %}
+	{% with cur_date=cur_day|date:"Y-m-d" %}
+	<form method="post" action="{% url 'day_fitness' cur_date %}">
+	  {% csrf_token %}
+	  <div class="form-group">
+	    <div id="cardio">
+	      {{ form.cardio.label_tag }}
+	      {{ form.cardio.errors }}
+	      {% render_field form.cardio class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" %}
+	    </div>
+	    <div id="strength">
+	      {{ form.strength.label_tag }}
+	      {{ form.strength.errors }}
+	      {% render_field form.strength class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" %}
+	    </div>
+	  </div>
+	  <input type="submit" value="Submit"/>
+	</form>
+	{% endwith %}
+{% endblock page_content %}

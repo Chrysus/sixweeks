@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Six Weeks - Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+  </head>
+
+  <body>
+    <div data-role="page">
+      <div data-role="header" data-theme="c" class="ui-header ui-bar-b">
+	<h1>Six Weeks</h1>
+      </div>
+      <div role="main" class="ui-content">
+	<h3>Sign Up</h3>
+	<form method="post" action="{% url 'sign-up' %}">
+	  {% csrf_token %}
+	  {{ form.first_name.label_tag }}
+	  {{ form.first_name.errors }}
+	  {{ form.first_name }}
+
+	  {{ form.last_name.label_tag }}
+	  {{ form.last_name.errors }}
+	  {{ form.last_name }}
+
+	  {{ form.email.label_tag }}
+	  {{ form.email.errors }}
+	  {{ form.email }}
+
+	  {{ form.password1.label_tag }}
+	  {{ form.password1.errors }}
+	  {{ form.password1 }}
+
+	  {{ form.password2.label_tag }}
+	  {{ form.password2.errors }}
+	  {{ form.password2 }}
+
+	  <input type="submit" value="sign-up"/>
+	</form>
+
+	{% include "error-popup.html" %}
+	
+	<div data-role="popup" id="dlg-sign-up-sent" data-dismissible="false" style="max-width:400px;">
+	  <div data-role="header">
+	    <h1>Almost done...</h1>
+	  </div>
+	  <div role="main" class="ui-content">
+	    <h3>Confirm Your Email Address</h3>
+	    <p>We sent you an email to confirm your email address.</p>
+	    <div class="mc-text-center">
+	      <a href="sign-in.html" class="ui-btn ui-corner-all ui-shadow ui-btn-b mc-top-margin-1-5">OK</a>
+	    </div>
+	  </div>
+	</div>
+	
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -1,0 +1,28 @@
+<div id={{ dialog_id }} class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<h4 class="modal-title">Create New Point</h4>
+      </div>
+      <div class="modal-body">
+	<form method="post" action="{% url 'points_admin' %}">
+	  {% csrf_token %}
+	  {{ form.title.label_tag }}
+	  {{ form.title.errors }}
+	  {{ form.title }}
+	  {{ form.description.label_tag }}
+	  {{ form.description.errors }}
+	  {{ form.description }}
+	  {{ form.point_value.label_tag }}
+	  {{ form.point_value.errors }}
+	  {{ form.point_value }}
+	  <input type="submit" value="Create"/>
+	</form>
+      </div>
+      <div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

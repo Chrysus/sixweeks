@@ -1,0 +1,31 @@
+{% extends "mobile/base.html" %}
+
+{% block page_content %}
+	<ul data-role="listview" class="ui-listview">
+	  {% with cur_date=cur_day|date:"Y-m-d" %}
+	  <li id='pointsCell' class="ui-first-child">
+	    <a href="{% url 'day_points' cur_date %}" rel="external" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+	      Points
+	    </a>
+	  </li>
+	  <li id='fitnessCell'>
+	    <a href="{% url 'day_fitness' cur_date %}" rel="external" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+	      Fitness
+	    </a>
+	  </li>
+	  <li id='nutritionCell'>
+	    <a href="{% url 'day_nutrition' cur_date %}" rel="external" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+	      Nutrition
+	    </a>
+	  </li>
+	  {% if messages %}
+	  <li id='messasgesCell'>
+	    <a href="{% url 'messages' %}" rel="external" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+	      Messages
+	      <span class="ui-li-count ui-body-inherit">0</span>
+	    </a>
+	  </li>
+	  {% endif %}
+	  {% endwith %}
+	</ul>
+{% endblock page_content %}
